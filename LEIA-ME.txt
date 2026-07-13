@@ -1,0 +1,22 @@
+STUDIO JESSICA LEITE
+
+Projeto completo:
+- index.html
+- style.css
+- script.js
+- assets/
+
+Configurado:
+WhatsApp: (11) 95754-7374
+Instagram: @studio_jeeleiite
+Endereço: Rua Itapaiúna, 2919 – Sala 03
+
+Para publicar:
+1. Descompacte o ZIP.
+2. Envie todos os arquivos para o GitHub.
+3. Importe o repositório na Vercel.
+
+Google Ads:
+Substitua AW-SEU_ID no index.html.
+
+Atualização: novo logo aplicado e seção de procedimentos extras removida.
