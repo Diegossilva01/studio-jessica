@@ -36,13 +36,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=320">
 
-  <!-- Google Ads - mantido do projeto original -->
+  <!-- Google tag (gtag.js) - Google Ads -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17755074618"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'AW-17755074618');
+
+    // Conversão do Google Ads.
+    // O disparo é feito somente quando um formulário de contato/agendamento
+    // preenchido é enviado; abrir a página sozinho não conta como conversão.
+    function registrarConversaoGoogleAds() {
+      if (typeof gtag !== 'function') return;
+
+      gtag('event', 'conversion', {
+        'send_to': 'AW-17755074618/26gfCOji2sUbELrgo5JC',
+        'value': 1.0,
+        'currency': 'BRL',
+        'transaction_id': ''
+      });
+    }
   </script>
 
   <!-- SEO local / dados estruturados para o Google -->
@@ -457,5 +471,22 @@
   </div>
 
   <script src="script.js?v=320"></script>
+
+  <!-- Disparo da conversão ao enviar um formulário válido de agendamento -->
+  <script>
+    document.addEventListener('submit', function (event) {
+      const form = event.target.closest('[data-lead-form]');
+      if (!form) return;
+
+      const requiredFields = Array.from(form.querySelectorAll('[required]'));
+      const requiredFilled = requiredFields.every(function (field) {
+        return String(field.value || '').trim() !== '';
+      });
+
+      if (!requiredFilled) return;
+
+      registrarConversaoGoogleAds();
+    }, true);
+  </script>
 </body>
 </html>
