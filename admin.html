@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#15110e">
+  <title>Painel | Studio Jessica Leite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css?v=29">
+</head>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <div class="login-shell">
+      <div class="login-brand-panel">
+        <a href="index.html" class="brand"><img src="assets/logo-novo.png" alt="Studio Jessica Leite"></a>
+        <div class="login-copy">
+          <span class="eyebrow">Área administrativa</span>
+          <h1>Seu site, seus preços e seus resultados em um só lugar.</h1>
+          <p>Altere ofertas e fotos sem precisar abrir a planilha.</p>
+        </div>
+        <div class="login-points">
+          <span>✓ Preços e descontos</span>
+          <span>✓ Galeria com até 10 fotos por serviço</span>
+          <span>✓ Atualização direta no site</span>
+        </div>
+      </div>
+
+      <form id="loginForm" class="login-card">
+        <span class="mini-label">Acesso restrito</span>
+        <h2>Entrar no painel</h2>
+        <p>Use seu usuário e senha cadastrados.</p>
+        <label>Usuário<input name="usuario" autocomplete="username" required placeholder="Seu usuário"></label>
+        <label>Senha<input name="senha" type="password" autocomplete="current-password" required placeholder="Sua senha"></label>
+        <button class="btn primary" type="submit">Entrar</button>
+        <small id="loginMsg" class="form-message"></small>
+        <a class="back-link" href="index.html">← Voltar para o site</a>
+      </form>
+    </div>
+  </section>
+
+  <div id="app" class="app hidden">
+    <aside id="sidebar" class="sidebar">
+      <div class="side-brand"><img src="assets/logo-novo.png" alt="Studio Jessica Leite"></div>
+      <nav>
+        <button class="nav-btn active" data-view="procedimentos"><span>✦</span> Procedimentos</button>
+        <button class="nav-btn" data-view="clientes"><span>◎</span> Clientes</button>
+        <button class="nav-btn" data-view="seguranca"><span>⌁</span> Segurança</button>
+      </nav>
+      <div class="side-bottom">
+        <a href="index.html" target="_blank" rel="noopener">Ver site ↗</a>
+        <button id="logoutBtn" type="button">Sair</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="menu-btn" aria-label="Abrir menu">☰</button>
+        <div><strong>Painel Studio Jessica Leite</strong><small id="userInfo"></small></div>
+        <a href="index.html" target="_blank" rel="noopener" class="top-site-link">Abrir site ↗</a>
+      </header>
+
+      <div class="content">
+        <section id="view-procedimentos" class="view active">
+          <div class="page-heading">
+            <div><span class="eyebrow dark">Conteúdo do site</span><h1>Procedimentos</h1><p>Hoje você tem Micropigmentação, Design, Cílios e Brow Lamination. Edite os serviços atuais ou crie uma nova aba sempre que precisar.</p></div>
+            <div class="heading-actions"><button id="addProcedureBtn" class="btn primary" type="button">+ Novo procedimento</button><button id="refreshBtn" class="btn secondary" type="button">Atualizar dados</button></div>
+          </div>
+
+          <div id="summaryCards" class="summary-grid"></div>
+
+          <div class="workspace">
+            <aside class="service-switcher" id="serviceSwitcher"></aside>
+
+            <section class="editor-panel">
+              <div class="editor-head">
+                <div><span class="mini-label">Editando</span><h2 id="editorTitle">Procedimento</h2></div>
+                <span id="saveStatus" class="save-status">Dados sincronizados</span>
+              </div>
+
+              <form id="procedureForm">
+                <div class="form-grid">
+                  <label class="span-2">Nome do procedimento<input name="nome" maxlength="120" required></label>
+                  <label>Preço original (de)<div class="money-input"><span>R$</span><input name="precoOriginal" inputmode="decimal" placeholder="1.000,00"></div></label>
+                  <label>Preço principal<div class="money-input"><span>R$</span><input name="precoPromocional" inputmode="decimal" placeholder="500,00"></div></label>
+                  <div class="discount-preview"><span>Desconto automático</span><strong id="discountPreview">—</strong><small id="discountHelper">Preencha os dois valores.</small></div>
+                  <label>Como mostrar o preço<select name="tipoPreco"><option value="A partir de">A partir de</option><option value="Por">Por</option></select><small class="field-help">Escolha se o site vai mostrar “A partir de R$ ...” ou “Por R$ ...”.</small></label>
+                  <label>Observação do preço<input name="observacaoPreco" maxlength="120" placeholder="Ex.: por sessão, manutenção, valor inicial"><small class="field-help">Essa observação aparece abaixo do valor.</small></label>
+                  <label class="span-2">Descrição<textarea name="descricao" rows="4" maxlength="900" placeholder="Descrição curta do procedimento"></textarea></label>
+                  <label class="toggle-row span-2"><span><strong>Mostrar no site</strong><small>Desative para ocultar temporariamente esse procedimento.</small></span><input name="ativo" type="checkbox"><i></i></label>
+                </div>
+
+                <div class="preview-card">
+                  <div><span>Prévia da oferta</span><strong id="previewName">Procedimento</strong></div>
+                  <div class="preview-price"><del id="previewOld"></del><b id="previewCurrent">Consultar</b><em id="previewBadge"></em><small id="previewNote"></small></div>
+                </div>
+
+                <div class="form-actions"><button class="btn primary" type="submit">Salvar alterações</button></div>
+                <small id="formMsg" class="form-message"></small>
+              </form>
+
+              <div class="gallery-admin">
+                <div class="gallery-admin-head">
+                  <div><span class="mini-label">Galeria do procedimento</span><h3>Fotos no site</h3><p>Você pode manter até 10 imagens. O painel envia as fotos para o Google Drive automaticamente.</p></div>
+                  <div class="photo-counter"><strong id="photoCount">0</strong><span>/ 10</span></div>
+                </div>
+
+                <div id="photoGrid" class="photo-grid-admin"></div>
+
+                <div class="upload-box">
+                  <label class="upload-picker">Adicionar fotos<input id="imageInput" type="file" accept="image/*" multiple></label>
+                  <div class="upload-copy"><strong>Escolha até 5 por vez</strong><small>As imagens são otimizadas antes do envio.</small></div>
+                  <button id="uploadBtn" class="btn secondary" type="button" disabled>Enviar fotos</button>
+                </div>
+                <div id="selectedFiles" class="selected-files"></div>
+                <small id="uploadMsg" class="form-message"></small>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="view-clientes" class="view">
+          <div class="page-heading">
+            <div><span class="eyebrow dark">Leads do site</span><h1>Clientes interessados</h1><p>Todos que preencherem o formulário antes do WhatsApp aparecem aqui para você poder retornar o contato.</p></div>
+            <button id="refreshLeadsBtn" class="btn secondary" type="button">Atualizar clientes</button>
+          </div>
+
+          <div class="lead-admin-summary">
+            <article><span>Total de contatos</span><strong id="leadTotal">0</strong></article>
+            <article><span>Novos</span><strong id="leadNew">0</strong></article>
+            <article><span>Agendados</span><strong id="leadScheduled">0</strong></article>
+          </div>
+
+          <div class="lead-admin-card">
+            <div class="lead-toolbar">
+              <input id="leadSearch" type="search" placeholder="Buscar por nome, telefone ou procedimento">
+              <select id="leadStatusFilter">
+                <option value="">Todos os status</option>
+                <option value="Novo">Novo</option>
+                <option value="Contatado">Contatado</option>
+                <option value="Agendado">Agendado</option>
+                <option value="Sem resposta">Sem resposta</option>
+              </select>
+            </div>
+            <div id="leadList" class="lead-list"><div class="lead-empty">Carregando clientes...</div></div>
+            <small id="leadsMsg" class="form-message"></small>
+          </div>
+        </section>
+
+        <section id="view-seguranca" class="view">
+          <div class="page-heading"><div><span class="eyebrow dark">Conta</span><h1>Segurança</h1><p>Altere sua senha de acesso ao painel.</p></div></div>
+          <form id="passwordForm" class="security-card">
+            <label>Senha atual<input name="senhaAtual" type="password" autocomplete="current-password" required></label>
+            <label>Nova senha<input name="novaSenha" type="password" minlength="6" autocomplete="new-password" required></label>
+            <label>Confirmar nova senha<input name="confirmarSenha" type="password" minlength="6" autocomplete="new-password" required></label>
+            <button class="btn primary" type="submit">Alterar senha</button>
+            <small id="passwordMsg" class="form-message"></small>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+
+
+  <div id="procedureModal" class="admin-modal" aria-hidden="true">
+    <div class="admin-modal-backdrop" data-close-procedure-modal></div>
+    <form id="newProcedureForm" class="admin-modal-card">
+      <button class="admin-modal-close" type="button" data-close-procedure-modal aria-label="Fechar">×</button>
+      <span class="mini-label">Novo campo no site</span>
+      <h2>Adicionar procedimento</h2>
+      <p>O painel cria uma nova aba na planilha e o serviço passa a aparecer automaticamente no site.</p>
+      <label>Nome do procedimento<input name="nome" maxlength="120" required placeholder="Ex.: Lash Lifting"></label>
+      <label>Descrição curta<textarea name="descricao" rows="3" maxlength="900" placeholder="Descreva o resultado ou diferencial"></textarea></label>
+      <button class="btn primary" type="submit">Criar procedimento</button>
+      <small id="newProcedureMsg" class="form-message"></small>
+    </form>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="admin.js?v=290"></script>
+</body>
+</html>
